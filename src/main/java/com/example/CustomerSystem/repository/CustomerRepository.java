@@ -21,4 +21,43 @@ public class CustomerRepository {
         list.add(c);
         return c;
     }
+
+    public List<customer> getAllCustomer(){
+        return list;
+    }
+    public customer getCustomerById(int id) {
+        for (customer customer : list) {
+            if (customer.getId() == id) {
+                return customer;
+            }
+        }
+        return null; // if not found
+    }
+
+    public String delete(int customerId) {
+        boolean removed = list.removeIf(customer -> customer.getId() == customerId);
+
+        if (removed) {
+            return "Deleted";
+        } else {
+            return "Customer Not Found";
+        }
+    }
+    public String update(int customerId, customer updatedCustomer) {
+
+        for (customer customer : list) {
+
+            if (customer.getId() == customerId) {
+
+                customer.setName(updatedCustomer.getName());
+                customer.setAge(updatedCustomer.getAge());
+                customer.setAddress(updatedCustomer.getAddress());
+
+                return "Customer Updated Successfully";
+            }
+        }
+
+        return "Customer Not Found";
+    }
+
 }

@@ -10,32 +10,35 @@ import java.util.List;
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
-
-    private final CustomerRepository repository;
-
-    public CustomerController(CustomerRepository repository) {
-        this.repository = repository;
+    private final CustomerService customerService;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+    @PostMapping("/add")
+    public customer saveCustomer(@RequestBody customer customer) {
+        return customerService.saveCustomer(customer);
     }
 
-    @PostMapping
-    public customer saveCustomer(@RequestBody customer customer) {
-        return repository.save(customer);
+    @GetMapping("/allCustomer")
+    public List<customer> getAllCustomer() {
+        return customerService.getAllCustomer();
+    }
+    @GetMapping("/{customerId}")
+    public customer getCustomerById(@PathVariable int customerId) {
+        return customerService.getCustomerById(customerId);
+    }
+    @DeleteMapping("/{customerId}")
+    public String deleteById(@PathVariable int customerId){
+        return customerService.deleteById(customerId);
+    }
+    @PutMapping("/{customerId}")
+    public String updateCustomer(
+            @PathVariable int customerId,
+            @RequestBody customer customer) {
+
+        return customerService.updateCustomer(customerId, customer);
     }
 }
-//    }
-//    @GetMapping("/allCustomer")
-//    public List<customer> getAllCustomer(){
-//        return CustomerService.getAllCustomer();
-//    }
-//    @GetMapping("/{Customerid}")
-//    public List<customer> getCustomerbyId(@PathVariable int customerId){
-//        return CustomerService.findById(customerId);
-//    }
-//    @DeleteMapping("/{deleteById}")
-//    public String deleteById(@PathVariable int customerId){
-//        deleteById(customerId);
-//        return "Customer Deleted Successfully";
-//    }
-//
+
 
 
